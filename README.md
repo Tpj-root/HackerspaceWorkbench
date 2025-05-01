@@ -8,6 +8,12 @@ External workbenches in FreeCAD add extra tools for specific tasks.
 
 ![Toolbar](img/WB.png)
 
+![Tooltip](img/tool_tip.png)
+
+![Popup](img/popup.png)
+
+
+
 
 
 
