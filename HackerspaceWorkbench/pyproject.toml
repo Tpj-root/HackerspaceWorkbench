@@ -1,0 +1,32 @@
+# References: 
+# https://packaging.python.org/en/latest/specifications/declaring-project-metadata/
+# https://packaging.python.org/en/latest/guides/packaging-namespace-packages/#native-namespace-packages
+# https://packaging.python.org/en/latest/guides/single-sourcing-package-version/
+# https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "freecad.hacker_space_workbench"
+dynamic = ["version"]
+description = "External workbenches in FreeCAD add extra tools for specific tasks."
+readme = "README.md"
+license = {file = "LICENSE"}
+maintainers = [
+    {name = "Tpj-root", email = "trichyhackerspace@gmail.com"
+    },
+]
+requires-python = ">=3.8"
+dependencies = ["'numpy',"]
+
+[project.urls]
+source = "https://github.com/Tpj-root/HackerspaceWorkbench"
+
+[tool.setuptools]
+packages = ["freecad", "freecad.hacker_space_workbench"]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = {attr = "freecad.hacker_space_workbench.__version__"}
