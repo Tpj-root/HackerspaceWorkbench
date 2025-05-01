@@ -4,11 +4,17 @@ External workbenches in FreeCAD add extra tools for specific tasks.
 
 
 
-**sample**
+**Toolbar**
 
 ![Toolbar](img/WB.png)
 
+
+**Tooltip**
+
 ![Tooltip](img/tool_tip.png)
+
+
+**Popup**
 
 ![Popup](img/popup.png)
 
@@ -123,4 +129,5 @@ rm /home/cnc/.local/share/FreeCAD/Mod/HackerspaceWorkbench
 
 https://github.com/FreeCAD/freecad.workbench_starterkit
 
+https://github.com/FreeCAD/FreeCAD-addons/tree/master
 ```
