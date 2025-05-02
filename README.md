@@ -119,6 +119,15 @@ rm /home/cnc/.local/share/FreeCAD/Mod/HackerspaceWorkbench
 
 
 
+**Use FreeCAD AppImage as SDK**
+
+```
+./FreeCAD*.AppImage --appimage-extract
+
+
+This creates a folder: squashfs-root/
+```
+
 
 
 
@@ -131,3 +140,19 @@ https://github.com/FreeCAD/freecad.workbench_starterkit
 
 https://github.com/FreeCAD/FreeCAD-addons/tree/master
 ```
+
+
+
+The `libfmt-dev` package provides the [fmt](https://fmt.dev/) library, a **modern C++ formatting library** used as a safer, faster alternative to `printf` and `std::cout`.
+
+📌 **Purpose in FreeCAD:**
+
+* Used for formatted logging/output (e.g., in `Console.h`).
+* Replaces `printf`-style functions with type-safe, efficient formatting like:
+
+  ```cpp
+  fmt::print("Value: {}\n", 42);
+  ```
+  
+It's a required dependency when compiling C++ code in FreeCAD that includes formatted console output.
+
