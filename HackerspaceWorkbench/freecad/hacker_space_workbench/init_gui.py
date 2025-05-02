@@ -1,11 +1,11 @@
 import os
 import FreeCADGui as Gui
 import FreeCAD as App
-from freecad. hacker_space_workbench import my_numpy_function
+from freecad.hacker_space_workbench import my_numpy_function
 from PySide2.QtWidgets import QMessageBox
 
-translate=App.Qt.translate
-QT_TRANSLATE_NOOP=App.Qt.QT_TRANSLATE_NOOP
+translate = App.Qt.translate
+QT_TRANSLATE_NOOP = App.Qt.QT_TRANSLATE_NOOP
 
 ICONPATH = os.path.join(os.path.dirname(__file__), "resources")
 TRANSLATIONSPATH = os.path.join(os.path.dirname(__file__), "resources", "translations")
@@ -18,83 +18,62 @@ Gui.updateLocale()
 class MySimpleCommand:
     def GetResources(self):
         return {
-            'Pixmap': os.path.join(ICONPATH, 'cool.svg'),
-            'MenuText': "Say Hello",
-            'ToolTip': "Prints Hello from Hackerspace"
+            'Pixmap': '',  # Optional icon
+            'MenuText': "count",
+            'ToolTip': "Displays shape info"
         }
 
     def Activated(self):
-        QMessageBox.information(None, "Hackerspace", "Hello from Hackerspace!")
+        if Gui.ActiveDocument is None:
+            QMessageBox.warning(None, "Error", "No active document.")
+            return
+
+        selection = Gui.Selection.getSelection()
+        if not selection:
+            QMessageBox.warning(None, "Error", "No object selected.")
+            return
+
+        obj = selection[0]
+
+        if hasattr(obj, 'Shape') and obj.Shape and not obj.Shape.isNull():
+            shape = obj.Shape
+            if shape.isValid():
+                face_count = len(shape.Faces)
+                edge_count = len(shape.Edges)
+                vertex_count = len(shape.Vertexes)
+
+                QMessageBox.information(None, "Object Info",
+                    f"Object: {obj.Name}\nFace count: {face_count}\nEdge count: {edge_count}\nVertex count: {vertex_count}")
+                return
+
+        QMessageBox.warning(None, "Error", "No valid shape object found.")
 
     def IsActive(self):
         return True
 
 
-
-
-# class MySimpleCommand:
-#     def GetResources(self):
-#         return {
-#             'Pixmap': os.path.join(ICONPATH, 'cool.svg'),  # icon
-#             'MenuText': "Say Hello",
-#             'ToolTip': "Prints Hello from Hackerspace"
-#         }
-# 
-#     def Activated(self):
-#         #App.Console.PrintMessage("Hello from Hackerspace!\n")
-#         print("Hello from Hackerspace!")
-# 
-# 
-#     def IsActive(self):
-#         return True
-
-
 class HKWorkBench(Gui.Workbench):
-    """
-    class which gets initiated at startup of the gui
-    """
     MenuText = translate("Workbench", "HackerspaceWorkbench")
-    ToolTip = translate("Workbench", "a simple HackerspaceWorkbench")
+    ToolTip = translate("Workbench", "A simple HackerspaceWorkbench")
     Icon = os.path.join(ICONPATH, "cool.svg")
     toolbox = []
 
     def GetClassName(self):
         return "Gui::PythonWorkbench"
 
-
     def Initialize(self):
-        """
-        This function is called at the first activation of the workbench.
-        here is the place to import all the commands
-        """
-
-
         App.Console.PrintMessage(translate("Log", "Switching to hacker_space_workbench") + "\n")
-        App.Console.PrintMessage(translate("Log", "Run a numpy function:") + "sqrt(100) = {}\n".format(my_numpy_function.my_foo(100)))
+        App.Console.PrintMessage(translate("Log", "Run a numpy function:") + f" sqrt(100) = {my_numpy_function.my_foo(100)}\n")
 
-        # NOTE: toolbox
         self.toolbox = ['My_Hello_Command']
-
-        # NOTE: Context for this commands must be "Workbench"
         self.appendToolbar(QT_TRANSLATE_NOOP("Workbench", "Tools"), self.toolbox)
         self.appendMenu(QT_TRANSLATE_NOOP("Workbench", "Tools"), self.toolbox)
 
-
     def Activated(self):
-        '''
-        code which should be computed when a user switch to this workbench
-        '''
-        App.Console.PrintMessage(translate(
-            "Log",
-            "Workbench hacker_space_workbench activated.") + "\n")
+        App.Console.PrintMessage(translate("Log", "Workbench hacker_space_workbench activated.") + "\n")
 
     def Deactivated(self):
-        '''
-        code which should be computed when this workbench is deactivated
-        '''
-        App.Console.PrintMessage(translate(
-            "Log",
-            "Workbench hacker_space_workbench de-activated.") + "\n")
+        App.Console.PrintMessage(translate("Log", "Workbench hacker_space_workbench de-activated.") + "\n")
 
 
 Gui.addWorkbench(HKWorkBench())
