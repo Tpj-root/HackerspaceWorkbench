@@ -137,3 +137,86 @@ else:
 
 
 ```
+
+
+
+
+To list all workbenches with their index numbers in FreeCAD using Python:
+
+```python
+for i, wb in enumerate(Gui.listWorkbenches()):
+    print(f"{i}: {wb}")
+```
+
+This will output something like:
+
+```
+0: NoneWorkbench
+1: AssemblyWorkbench
+2: BIMWorkbench
+3: CAMWorkbench
+4: DraftWorkbench
+5: FemWorkbench
+6: InspectionWorkbench
+7: MaterialWorkbench
+8: MeshWorkbench
+9: OpenSCADWorkbench
+10: PartWorkbench
+11: PartDesignWorkbench
+12: PointsWorkbench
+13: ReverseEngineeringWorkbench
+14: RobotWorkbench
+15: SketcherWorkbench
+16: SpreadsheetWorkbench
+17: SurfaceWorkbench
+18: TechDrawWorkbench
+19: TestWorkbench
+20: A2plusWorkbench
+21: HKWorkBench
+```
+
+Then you can use `Gui.runCommand('WorkbenchName', index)` accordingly.
+
+
+
+
+```
+Gui.runCommand('Std_Workbench',19)
+
+```
+
+
+
+**To enable or disable the status bar via FreeCAD Python console:**
+
+```python
+# Hide status bar
+Gui.getMainWindow().statusBar().hide()
+
+# Show status bar
+Gui.getMainWindow().statusBar().show()
+```
+
+
+```
+
+Gui.runCommand('Std_ViewStatusBar',0)
+Gui.runCommand('Std_ViewStatusBar',1)
+```
+
+
+
+
+
+
+
+
+
+**HELP**
+
+
+
+```
+
+https://github.com/FreeCAD/FreeCAD/blob/b3a3b13603e7c48c6349080a893471ae9c105bc1/src/Mod/Part/Gui/Command.cpp#L2042
+```
